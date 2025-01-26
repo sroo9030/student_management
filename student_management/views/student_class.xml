@@ -1,0 +1,95 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="class_list">
+      <field name="name">Class list</field>
+      <field name="model">student.class</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cid"/>
+          <field name="class_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="class_form">
+      <field name="name">Class form</field>
+      <field name="model">student.class</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="toggle_active" string="Active" type="object" class="oe_stat_button" icon="fa-archive">
+                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+              </button>
+            </div>
+            <h2 string="ID">
+              <field name="cid" string="ID"/>
+            </h2>
+            <h1 string="Class Name">
+              <field name="class_id" placeholder="e.g. Physics"/>
+            </h1>
+            <group>
+              <field name="tag" widget="many2many_tags" options="{'no_create':True,'no_edit':True, 'color_field': 'color'}"/>
+            </group>
+
+            <notebook>
+              <page string="Courses">
+                  <field name="class_line_ids">
+                      <tree editable="bottom">
+                          <field name="course_id" options="{'no_create':True,'no_edit':True}"/>
+                          <field name="teacher" widget="many2many_tags" options="{'no_create':True,'no_edit':True}"/>
+                          <field name="schedule"/>
+                          <field name="location"/>
+                          <field name="platform" attrs="{'required': [('location', '=', 'virtual')]}"/>
+                          <field name="date"/>
+                      </tree>
+                  </field>
+              </page>
+            </notebook>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="class_action_window">
+      <field name="name">Class</field>
+      <field name="res_model">student.class</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="class_action_server">
+      <field name="name">course server</field>
+      <field name="model_id" ref="model_course_course"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+    <!-- menu categories -->
+
+    <menuitem name="Class" id="class_menu" parent="student_menu_root" action="class_action_window" sequence="2"/>
+
+    <!-- actions -->
+
+<!--    <menuitem name="Teachers" id="teacher_information_menu" parent="teacher_menu"-->
+<!--              />-->
+
+  </data>
+</odoo>

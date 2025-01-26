@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_student_management,student.management,model_student_management,base.group_user,1,1,1,1
+access_teacher_teacher,teacher.teacher,model_teacher_teacher,base.group_user,1,1,1,1
+access_course_course,course.course,model_course_course,base.group_user,1,1,1,1
+access_student_course_line,student.course.line,model_student_course_line,base.group_user,1,1,1,1
+access_staff_staff,staff.staff,model_staff_staff,base.group_user,1,1,1,1
+access_student_class,student.class,model_student_class,base.group_user,1,1,1,1
+access_student_class_line,student.class.line,model_student_class_line,base.group_user,1,1,1,1
+access_student_tag,student.tag,model_student_tag,base.group_user,1,1,1,1
+access_student_attendance_line,student.attendance.line,model_student_attendance_line,base.group_user,1,1,1,1
+access_course_assignment,course.assignment,model_course_assignment,base.group_user,1,1,1,1
+access_student_assignment_line,student.assignment.line,model_student_assignment_line,base.group_user,1,1,1,1

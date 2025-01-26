@@ -1,0 +1,204 @@
+<odoo>
+  <data>
+    <!-- course list view definition -->
+
+    <record model="ir.ui.view" id="course_list">
+      <field name="name">course list</field>
+      <field name="model">course.course</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="teacher"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- course assignment list view definition -->
+
+    <record model="ir.ui.view" id="course_assignment_list">
+      <field name="name">course assignment list</field>
+      <field name="model">course.assignment</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="assignment"/>
+          <field name="course_id"/>
+          <field name="status"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- course list form definition -->
+
+    <record model="ir.ui.view" id="course_form">
+      <field name="name">course form</field>
+      <field name="model">course.course</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="toggle_active" string="Active" type="object" class="oe_stat_button" icon="fa-archive">
+                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+              </button>
+            </div>
+            <group col="4">
+              <field name="name"/>
+              <field name="teacher" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/>
+              <field name="staff"/>
+              <field name="tag" widget="many2many_tags" options="{'no_create':True,'no_edit':True, 'color_field': 'color'}"/>
+              <field name="avg_age"/>
+            </group>
+            <group>
+              <field name="description"/>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- course assignment form view definition -->
+
+    <record model="ir.ui.view" id="assignment_form">
+      <field name="name">course assignment</field>
+      <field name="model">course.assignment</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <div class="oe_button_box" name="button_box">
+              <button name="toggle_active" string="Active" type="object" class="oe_stat_button" icon="fa-archive">
+                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+              </button>
+            </div>
+            <group col="4">
+              <field name="assignment"/>
+              <field name="course_id" options="{'no_open': True, 'no_create': True}"/>
+              <field name="status"/>
+              <field name="tag" widget="many2many_tags" options="{'no_create':True,'no_edit':True, 'color_field': 'color'}"/>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <!-- kanban view course-->
+
+    <record id="view_course_kanban" model="ir.ui.view">
+        <field name="name">kanban course</field>
+        <field name="model">course.course</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="teacher"/>
+                <field name="staff"/>
+                <field name="tag"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                          <div class="oe_kanban_details">
+                            <ul>
+                              <li>
+                                <field name="name"/>
+                              </li>
+                              <li>
+                                <field name="teacher"/>
+                              </li>
+                              <li>
+                                <field name="staff"/>
+                              </li>
+                              <li>
+                                <field name="tag" options="{'color_field': 'color'}"/>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- kanban view assignment-->
+
+    <record id="view_assignment_kanban" model="ir.ui.view">
+        <field name="name">kanban assignment</field>
+        <field name="model">course.assignment</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="assignment"/>
+                <field name="status"/>
+                <field name="tag"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                          <div class="oe_kanban_details">
+                            <ul>
+                              <li>
+                                <field name="assignment"/>
+                              </li>
+                              <li>
+                                <field name="status"/>
+                              </li>
+                              <li>
+                                <field name="tag" options="{'color_field': 'color'}"/>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- actions opening views on models course-->
+
+    <record model="ir.actions.act_window" id="course_action_window">
+      <field name="name">Courses</field>
+      <field name="res_model">course.course</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- actions opening views on models assignment-->
+
+    <record model="ir.actions.act_window" id="assignment_action_window">
+      <field name="name">Courses Assignment</field>
+      <field name="res_model">course.assignment</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="course_action_server">
+      <field name="name">course server</field>
+      <field name="model_id" ref="model_course_course"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+    <!-- menu categories -->
+
+    <menuitem name="Courses" id="course_menu" parent="config_menu" action="course_action_window" sequence="3"/>
+    <menuitem name="Assignment" id="assignment_menu" parent="config_menu" action="assignment_action_window" sequence="4"/>
+
+    <!-- actions -->
+
+<!--    <menuitem name="Teachers" id="teacher_information_menu" parent="teacher_menu"-->
+<!--              />-->
+
+  </data>
+</odoo>
