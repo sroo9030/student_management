@@ -23,10 +23,13 @@ This project was developed as part of my learning journey in **Odoo 16 developme
 - **Deployment**: Docker (if applicable)  
 
 ## 🔧 Installation  
-To install and set up the module in your Odoo environment:  
+### **1. Install Odoo 16 on Ubuntu 22.04**  
+Follow this guide to set up Odoo 16 on your server:  
+👉 [How to Install Odoo 16 on Ubuntu 22.04 LTS](https://www.cybrosys.com/blog/how-to-install-odoo-16-on-ubuntu-22-04-lts-server)  
 
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/sroo9030/student_management
-   cd student-management-system
+### **2. Clone the Repository**  
+Once Odoo 16 is installed, clone this repository:  
+```bash
+git clone https://github.com/your-username/student-management-system.git
+cd student-management-system
 
